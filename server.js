@@ -36,7 +36,7 @@ let lastSession = null;
 const liveCache = {
   dashboard: null,
   assignees: null,
-  suggestions: null,
+  assignmentSuggestions: null,
   updatedAt: null,
   nextRefreshAt: null,
   error: null,
@@ -60,15 +60,16 @@ async function refreshLiveCache() {
   liveCache.refreshing = true;
   try {
     const session = await login(SERVICE_USERNAME, SERVICE_PASSWORD);
-    const [dashboard, assignees] = await Promise.all([
+    const [dashboard, assignees, suggestionResult] = await Promise.all([
       fetchDashboard(session),
       fetchCottonAssignees(session),
+      fetchAssignmentSuggestions(session),
     ]);
     liveCache.dashboard = dashboard;
     liveCache.assignees = assignees;
 
-    const suggestionResult = await fetchAssignmentSuggestions(session);
-    const allSuggestions = suggestionResult.suggestions || [];
+    const assignmentSuggestions = suggestionResult;
+    const allSuggestions = assignmentSuggestions.suggestions || [];
     const newSuggestions = [];
     for (const s of allSuggestions) {
       const key = taskKey(s);
@@ -81,14 +82,14 @@ async function refreshLiveCache() {
       if (key) seenTaskIds.add(key);
     }
 
-    liveCache.suggestions = {
+    liveCache.assignmentSuggestions = {
       suggestions: allSuggestions,
       newSuggestions,
       newCount: newSuggestions.length,
       totalCount: allSuggestions.length,
-      lookbackMonths: suggestionResult.lookbackMonths || 6,
-      plannedOrders: suggestionResult.plannedOrders || 0,
-      inboundRns: suggestionResult.inboundRns || 0,
+      lookbackMonths: assignmentSuggestions.lookbackMonths || 6,
+      plannedOrders: assignmentSuggestions.plannedOrders || 0,
+      inboundRns: assignmentSuggestions.inboundRns || 0,
       autoAssignEnabled,
       assignEndpointVerified: ASSIGN_ENDPOINT_VERIFIED,
     };
@@ -980,7 +981,40 @@ async function handler(req, res) {
         nextRefreshAt: liveCache.nextRefreshAt,
         dashboard: liveCache.dashboard,
         assignees: liveCache.assignees,
-        suggestions: liveCache.suggestions,
+        suggestions: liveCache.assignmentSuggestions,
+      });
+    }
+    if (req.method === "GET" && pathname === "/api/live-assignment-suggestions") {
+      ensureLiveCacheFresh();
+
+      if (!SERVICE_USERNAME || !SERVICE_PASSWORD) {
+        return send(res, 503, {
+          status: "unavailable",
+          message: "Dashboard service credentials are not configured. Contact the site administrator.",
+        });
+      }
+
+      if (liveCache.assignmentSuggestions) {
+        return send(res, 200, {
+          ...liveCache.assignmentSuggestions,
+          status: "ok",
+          updatedAt: liveCache.updatedAt,
+          nextRefreshAt: liveCache.nextRefreshAt,
+        });
+      }
+
+      if (liveCache.error) {
+        return send(res, 503, {
+          status: "error",
+          message: liveCache.error,
+          updatedAt: liveCache.updatedAt,
+          nextRefreshAt: liveCache.nextRefreshAt,
+        });
+      }
+
+      return send(res, 503, {
+        status: "loading",
+        message: "Assignment suggestions are loading. Please refresh in a moment.",
       });
     }
     if (req.method === "POST" && pathname === "/api/login") {

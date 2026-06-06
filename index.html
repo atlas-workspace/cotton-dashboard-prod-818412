@@ -740,6 +740,13 @@
       return json;
     }
 
+    async function get(url) {
+      const res = await fetch(url);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.message || "Request failed.");
+      return json;
+    }
+
     function setBusy(busy, text) {
       $("loginButton").disabled = busy;
       $("refreshButton").disabled = busy;
@@ -960,7 +967,9 @@
         $("assignmentRows").innerHTML = `<tr><td colspan="8">Loading assignment suggestions...</td></tr>`;
         $("assignmentPanel").scrollIntoView({ behavior: "smooth", block: "start" });
         setBusy(true, mode === "suggest" ? "Building assignment suggestions..." : mode === "autonomous" ? "Building autonomous assignment plan..." : "Building assignment plan...");
-        const data = await post("/api/assignment-suggestions", session);
+        const data = session
+          ? await post("/api/assignment-suggestions", session)
+          : await get("/api/live-assignment-suggestions");
         renderAssignmentSuggestions(data);
         setBusy(false, mode === "suggest" ? "Assignment suggestions ready." : mode === "autonomous" ? "Autonomous assignment plan created. Review the suggestions before applying in WISE." : "Assignment plan created. Review the suggestions before applying in WISE.");
       } catch (error) {
