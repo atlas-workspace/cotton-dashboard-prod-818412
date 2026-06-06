@@ -2,8 +2,8 @@
   "title": "Cotton",
   "siteLabel": "Cotton (LT_F34)",
   "source": "WISE",
-  "refreshedAt": "2026-06-06T00:29:29.230Z",
-  "generatedAt": "2026-06-06T00:29:29.230Z",
+  "refreshedAt": "2026-06-06T03:15:19.899Z",
+  "generatedAt": "2026-06-06T03:15:19.899Z",
   "facility": {
     "id": "LT_F34",
     "name": "Cotton",
@@ -337,11 +337,11 @@
   "customerRows": [
     {
       "customer": "GOLDEN BULL MARKETING",
-      "orderCount": 7185
+      "orderCount": 7187
     },
     {
       "customer": "RECESS",
-      "orderCount": 3979
+      "orderCount": 3982
     },
     {
       "customer": "F3 ENERGY LLC",
@@ -399,15 +399,15 @@
     },
     {
       "label": "All-status DS order count",
-      "value": "12168 unique DS orders"
+      "value": "12173 unique DS orders"
     },
     {
       "label": "All-status DS row count",
-      "value": "12168"
+      "value": "12173"
     },
     {
       "label": "Raw dropship query rows",
-      "value": "17538"
+      "value": "17543"
     },
     {
       "label": "Quantity fields found",

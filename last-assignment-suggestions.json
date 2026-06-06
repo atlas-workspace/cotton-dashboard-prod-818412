@@ -14,15 +14,33 @@
   "lookbackMonths": 6,
   "plannedOrders": 10,
   "inboundRns": 0,
-  "packedTaskRows": 2931,
-  "offloadTaskRows": 0,
+  "packedTaskRows": 16175,
+  "offloadTaskRows": 1823,
   "offloadTaskErrors": [
     "/wms-bam/inbound/offload-task/search-by-paging: API request failed: 404",
-    "/wms-bam/inbound/receive-task/search-by-paging: fetch failed",
-    "/wms-bam/inbound/receiving-task/search-by-paging: fetch failed",
-    "/wms-bam/inbound/unload-task/search-by-paging: fetch failed",
-    "/wms-bam/yard/equipment/search: fetch failed"
+    "/wms-bam/inbound/receiving-task/search-by-paging: API request failed: 404",
+    "/wms-bam/inbound/unload-task/search-by-paging: API request failed: 404"
   ],
+  "idLookupErrors": [],
+  "assignmentEndpointWiring": {
+    "receiveTask": {
+      "method": "PUT",
+      "endpoint": "/wms/inbound/receive-task"
+    },
+    "orderPlan": {
+      "method": "PUT",
+      "endpoint": "/wms/outbound/order-plan/update"
+    },
+    "loadTask": {
+      "method": "POST",
+      "endpointTemplate": "/wms/outbound/load-task/{id}"
+    },
+    "loadTaskBatch": {
+      "method": "PUT",
+      "endpoint": "/wms/outbound/load-task/batch-update"
+    }
+  },
+  "assignmentReadyCount": 10,
   "suggestions": [
     {
       "workType": "Outbound Order",
@@ -31,11 +49,55 @@
       "customer": "GOLDEN BULL MARKETING",
       "status": "PLANNED",
       "orderType": "DS",
-      "suggestedAssignee": "brian mendoza",
-      "packedOrdersForCustomer": 479,
+      "suggestedAssignee": "BRIAN ALEJANDRO MENDOZA",
+      "packedOrdersForCustomer": 1734,
       "offloadedRnsForCustomer": 0,
       "rank": 1,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "2016319450871021569",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81294"
+        ],
+        "loadIds": [],
+        "customerId": "ORG-557389",
+        "orderPlanId": "PLAN-44737",
+        "pickTaskIds": [
+          "TASK-328315",
+          "TASK-328316",
+          "TASK-328317",
+          "TASK-328318",
+          "TASK-328319",
+          "TASK-328320",
+          "TASK-328321",
+          "TASK-328322",
+          "TASK-328323",
+          "TASK-328324",
+          "TASK-328325",
+          "TASK-328326",
+          "TASK-328327",
+          "TASK-328328",
+          "TASK-328329",
+          "TASK-328330",
+          "TASK-328331",
+          "TASK-328332",
+          "TASK-328333",
+          "TASK-328334",
+          "TASK-328335"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "2016319450871021569",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44737",
+            "defaultAssigneeUserId": "2016319450871021569"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -44,11 +106,37 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "Jesus Emmanuel Jaime",
-      "packedOrdersForCustomer": 64,
+      "suggestedAssignee": "Gonzalo Garcia",
+      "packedOrdersForCustomer": 250,
       "offloadedRnsForCustomer": 0,
       "rank": 1,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "2016587159400292353",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81291"
+        ],
+        "loadIds": [
+          "78152473"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44745",
+        "pickTaskIds": [
+          "TASK-328393"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "2016587159400292353",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44745",
+            "defaultAssigneeUserId": "2016587159400292353"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -57,11 +145,37 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "oscar torres",
-      "packedOrdersForCustomer": 63,
+      "suggestedAssignee": "Jaime Garcia",
+      "packedOrdersForCustomer": 244,
       "offloadedRnsForCustomer": 0,
       "rank": 2,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "1965542886348869703",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81292"
+        ],
+        "loadIds": [
+          "78152472"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44742",
+        "pickTaskIds": [
+          "TASK-328369"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "1965542886348869703",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44742",
+            "defaultAssigneeUserId": "1965542886348869703"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -70,11 +184,39 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "Jaime Garcia",
-      "packedOrdersForCustomer": 59,
+      "suggestedAssignee": "Jesus Emmanuel Jaime",
+      "packedOrdersForCustomer": 233,
       "offloadedRnsForCustomer": 0,
       "rank": 3,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "4628",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81289"
+        ],
+        "loadIds": [
+          "78136593"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44732",
+        "pickTaskIds": [
+          "TASK-328254",
+          "TASK-328255",
+          "TASK-328256"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "4628",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44732",
+            "defaultAssigneeUserId": "4628"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -83,11 +225,37 @@
       "customer": "SCHINDLER ELEVATOR CORPORATION",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "ULISES OROPEZA BERNAL",
-      "packedOrdersForCustomer": 2,
+      "suggestedAssignee": "Henry Alonso Lopez Torres",
+      "packedOrdersForCustomer": 12,
       "offloadedRnsForCustomer": 0,
       "rank": 1,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "1965542886348869715",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81248"
+        ],
+        "loadIds": [
+          "R7584768"
+        ],
+        "customerId": "ORG-594369",
+        "orderPlanId": "PLAN-44712",
+        "pickTaskIds": [
+          "TASK-328014"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "1965542886348869715",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44712",
+            "defaultAssigneeUserId": "1965542886348869715"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -96,11 +264,39 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "manuel rodriguez",
-      "packedOrdersForCustomer": 59,
+      "suggestedAssignee": "ostorr",
+      "packedOrdersForCustomer": 140,
       "offloadedRnsForCustomer": 0,
       "rank": 4,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "2016969556411482113",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81247"
+        ],
+        "loadIds": [
+          "78136615"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44732",
+        "pickTaskIds": [
+          "TASK-328254",
+          "TASK-328255",
+          "TASK-328256"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "2016969556411482113",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44732",
+            "defaultAssigneeUserId": "2016969556411482113"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -109,11 +305,39 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "Gonzalo Garcia",
-      "packedOrdersForCustomer": 47,
+      "suggestedAssignee": "GUSTAVO LEON CARDOZO",
+      "packedOrdersForCustomer": 136,
       "offloadedRnsForCustomer": 0,
       "rank": 5,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "1965542886348869688",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81230"
+        ],
+        "loadIds": [
+          "78152471"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44732",
+        "pickTaskIds": [
+          "TASK-328254",
+          "TASK-328255",
+          "TASK-328256"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "1965542886348869688",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44732",
+            "defaultAssigneeUserId": "1965542886348869688"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -122,11 +346,40 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "KARINA GARCIA",
-      "packedOrdersForCustomer": 16,
+      "suggestedAssignee": "oscar torres",
+      "packedOrdersForCustomer": 116,
       "offloadedRnsForCustomer": 0,
       "rank": 6,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "1965542886348869636",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81185"
+        ],
+        "loadIds": [
+          "78136600"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44713",
+        "pickTaskIds": [
+          "TASK-328020",
+          "TASK-328021",
+          "TASK-328022",
+          "TASK-328023"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "1965542886348869636",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44713",
+            "defaultAssigneeUserId": "1965542886348869636"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -135,11 +388,37 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "ABISMAEL ZACHARIAS ROBINSON MARADIAGA",
-      "packedOrdersForCustomer": 6,
+      "suggestedAssignee": "manuel rodriguez",
+      "packedOrdersForCustomer": 91,
       "offloadedRnsForCustomer": 0,
       "rank": 7,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "1983354071573512359",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-81164"
+        ],
+        "loadIds": [
+          "78102895"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44706",
+        "pickTaskIds": [
+          "TASK-327982"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "1983354071573512359",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44706",
+            "defaultAssigneeUserId": "1983354071573512359"
+          }
+        },
+        "mutationReady": true
+      }
     },
     {
       "workType": "Outbound Order",
@@ -148,11 +427,40 @@
       "customer": "PEPSICO",
       "status": "PLANNED",
       "orderType": "RG",
-      "suggestedAssignee": "Carlos Lopez",
-      "packedOrdersForCustomer": 1,
+      "suggestedAssignee": "Rafael Velez Jr",
+      "packedOrdersForCustomer": 24,
       "offloadedRnsForCustomer": 0,
       "rank": 8,
-      "source": "Customer 6-month packed history"
+      "source": "Customer 6-month packed history",
+      "suggestedAssigneeUserId": "2029296383036157954",
+      "assignmentTarget": {
+        "targetType": "orderPlan",
+        "orderIds": [
+          "DN-80959"
+        ],
+        "loadIds": [
+          "78102894"
+        ],
+        "customerId": "ORG-368074",
+        "orderPlanId": "PLAN-44655",
+        "pickTaskIds": [
+          "TASK-327523",
+          "TASK-327524",
+          "TASK-327525",
+          "TASK-327526"
+        ],
+        "loadTaskId": "",
+        "suggestedAssigneeUserId": "2029296383036157954",
+        "mutation": {
+          "method": "PUT",
+          "endpoint": "/wms/outbound/order-plan/update",
+          "body": {
+            "id": "PLAN-44655",
+            "defaultAssigneeUserId": "2029296383036157954"
+          }
+        },
+        "mutationReady": true
+      }
     }
   ]
 }

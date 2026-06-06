@@ -1102,13 +1102,61 @@
       }
       $("dashboardMessage").textContent = "";
     });
-    $("confirmAssignButton").addEventListener("click", () => {
-      $("dashboardMessage").textContent = "Assignment endpoint has not been verified through WISE API discovery. No WISE tasks were changed. Tasks remain in Auto Suggest for review.";
-      $("confirmAssignButton").classList.add("hidden");
+    $("confirmAssignButton").addEventListener("click", async () => {
+      $("confirmAssignButton").disabled = true;
+      $("confirmAssignButton").textContent = "Assigning...";
+      $("dashboardMessage").textContent = "";
+      try {
+        const res = await fetch("/api/live-auto-assign", { method: "POST", headers: { "content-type": "application/json" } });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          $("dashboardMessage").textContent = json.message || "Assignment request failed.";
+        } else {
+          const parts = [];
+          if (json.assigned?.length) parts.push(`Assigned ${json.assigned.length} task(s) in WISE`);
+          if (json.skipped?.length) parts.push(`Skipped ${json.skipped.length} (IDs not fully resolved)`);
+          if (json.errors?.length) parts.push(`${json.errors.length} error(s)`);
+          $("dashboardMessage").textContent = parts.join(". ") + "." || json.message;
+          if (json.assigned?.length) {
+            const detail = json.assigned.map((a) => `${a.id} → ${a.assignee} (${a.type})`).join("; ");
+            $("assignmentNote").textContent = `Assigned: ${detail}`;
+          }
+        }
+      } catch (err) {
+        $("dashboardMessage").textContent = err.message || "Could not reach the assignment endpoint.";
+      } finally {
+        $("confirmAssignButton").disabled = false;
+        $("confirmAssignButton").textContent = "Confirm: assign these tasks in WISE";
+        $("confirmAssignButton").classList.add("hidden");
+      }
     });
-    $("confirmAutonomousButton").addEventListener("click", () => {
-      $("dashboardMessage").textContent = "Autonomous assignment endpoint has not been verified through WISE API discovery. No WISE tasks were changed. Tasks remain in Auto Suggest for review.";
-      $("confirmAutonomousButton").classList.add("hidden");
+    $("confirmAutonomousButton").addEventListener("click", async () => {
+      $("confirmAutonomousButton").disabled = true;
+      $("confirmAutonomousButton").textContent = "Assigning...";
+      $("dashboardMessage").textContent = "";
+      try {
+        const res = await fetch("/api/live-auto-assign", { method: "POST", headers: { "content-type": "application/json" } });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          $("dashboardMessage").textContent = json.message || "Assignment request failed.";
+        } else {
+          const parts = [];
+          if (json.assigned?.length) parts.push(`Assigned ${json.assigned.length} task(s) in WISE`);
+          if (json.skipped?.length) parts.push(`Skipped ${json.skipped.length} (IDs not fully resolved)`);
+          if (json.errors?.length) parts.push(`${json.errors.length} error(s)`);
+          $("dashboardMessage").textContent = parts.join(". ") + "." || json.message;
+          if (json.assigned?.length) {
+            const detail = json.assigned.map((a) => `${a.id} → ${a.assignee} (${a.type})`).join("; ");
+            $("assignmentNote").textContent = `Assigned: ${detail}`;
+          }
+        }
+      } catch (err) {
+        $("dashboardMessage").textContent = err.message || "Could not reach the assignment endpoint.";
+      } finally {
+        $("confirmAutonomousButton").disabled = false;
+        $("confirmAutonomousButton").textContent = "Confirm: autonomous assignment in WISE";
+        $("confirmAutonomousButton").classList.add("hidden");
+      }
     });
     document.querySelectorAll(".sort-header").forEach((button) => {
       button.addEventListener("click", () => {
