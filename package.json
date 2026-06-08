@@ -4,7 +4,8 @@
   "description": "Cotton facility WISE dashboard - live read-only public site",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "node -e \"console.log(\'build-ok\')\""
   },
   "engines": {
     "node": ">=18.0.0"

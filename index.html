@@ -1274,7 +1274,9 @@
         if (json.suggestions) {
           liveCache_suggestions = json.suggestions;
           $("liveInfoBar").classList.remove("hidden");
-          renderLiveSuggestions(json.suggestions);
+          // Keep the Auto Suggest panel hidden on initial load.
+          // Show it only after Auto Suggest, Auto Assign, or Autonomous is clicked.
+          $("assignmentPanel").classList.add("hidden");
         }
       } catch (err) {
         showUnavailable("Could not reach the dashboard server. Retrying...");
