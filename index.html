@@ -697,7 +697,7 @@
     let liveUpdatedAt = null;
     let liveNextRefreshAt = null;
     let liveCache_suggestions = null;
-    const previewMode = new URLSearchParams(window.location.search).has("preview");
+    const previewMode = new URLSearchParams(window.location.search).has("preview") || window.location.hostname.endsWith("github.io");
     const $ = (id) => document.getElementById(id);
     const fmt = (value) => Number(value || 0).toLocaleString("en-US");
     const esc = (value) => String(value ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -1066,7 +1066,7 @@
       });
     });
     $("autoSuggestButton").addEventListener("click", () => {
-      if (!previewMode && liveCache_suggestions) {
+      if (liveCache_suggestions) {
         renderLiveSuggestions(liveCache_suggestions);
         $("assignmentPanel").scrollIntoView({ behavior: "smooth", block: "start" });
         return;
@@ -1074,7 +1074,7 @@
       if (session) loadAssignmentSuggestions("suggest");
     });
     $("autoAssignButton").addEventListener("click", () => {
-      if (!previewMode && liveCache_suggestions) {
+      if (liveCache_suggestions) {
         renderLiveSuggestions(liveCache_suggestions);
         $("assignmentPanel").scrollIntoView({ behavior: "smooth", block: "start" });
         $("assignButton").click();
@@ -1083,7 +1083,7 @@
       if (session) loadAssignmentSuggestions("assign");
     });
     $("autonomousButton").addEventListener("click", () => {
-      if (!previewMode && liveCache_suggestions) {
+      if (liveCache_suggestions) {
         assignmentMode = "autonomous";
         renderLiveSuggestions(liveCache_suggestions);
         $("assignmentPanel").scrollIntoView({ behavior: "smooth", block: "start" });
