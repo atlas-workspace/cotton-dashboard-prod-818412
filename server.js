@@ -43,6 +43,16 @@ const liveCache = {
   refreshing: false,
 };
 
+function readSavedJson(filename) {
+  try {
+    const fullPath = path.join(__dirname, filename);
+    if (!fs.existsSync(fullPath)) return null;
+    return JSON.parse(fs.readFileSync(fullPath, "utf8"));
+  } catch (_) {
+    return null;
+  }
+}
+
 const seenTaskIds = new Set();
 let autoAssignEnabled = true;
 const ASSIGN_ENDPOINT_VERIFIED = true;
@@ -1197,12 +1207,31 @@ async function handler(req, res) {
       const type = ext === ".png" ? "image/png" : ext === ".jpg" || ext === ".jpeg" ? "image/jpeg" : ext === ".svg" ? "image/svg+xml" : "application/octet-stream";
       return send(res, 200, fs.readFileSync(assetPath), type);
     }
+    if (req.method === "GET" && ["/last-dashboard.json", "/last-assignees.json", "/last-assignment-suggestions.json"].includes(pathname)) {
+      const filePath = path.join(__dirname, pathname.slice(1));
+      if (!fs.existsSync(filePath)) return send(res, 404, { message: "Not found." });
+      return send(res, 200, fs.readFileSync(filePath, "utf8"), "application/json; charset=utf-8");
+    }
     if (req.method === "GET" && pathname === "/api/live-dashboard") {
       ensureLiveCacheFresh();
       if (!SERVICE_USERNAME || !SERVICE_PASSWORD) {
+        const dashboard = readSavedJson("last-dashboard.json");
+        const assignees = readSavedJson("last-assignees.json");
+        const suggestions = readSavedJson("last-assignment-suggestions.json");
+        if (dashboard) {
+          return send(res, 200, {
+            status: "ok",
+            mode: "saved",
+            updatedAt: dashboard.refreshedAt || dashboard.generatedAt || null,
+            nextRefreshAt: null,
+            dashboard,
+            assignees,
+            suggestions,
+          });
+        }
         return send(res, 503, {
           status: "unavailable",
-          message: "Dashboard service credentials are not configured. Contact the site administrator.",
+          message: "Dashboard service credentials are not configured and saved data is unavailable.",
           updatedAt: null,
           nextRefreshAt: null,
         });
@@ -1236,9 +1265,19 @@ async function handler(req, res) {
       ensureLiveCacheFresh();
 
       if (!SERVICE_USERNAME || !SERVICE_PASSWORD) {
+        const suggestions = readSavedJson("last-assignment-suggestions.json");
+        if (suggestions) {
+          return send(res, 200, {
+            ...suggestions,
+            status: "ok",
+            mode: "saved",
+            updatedAt: suggestions.generatedAt || null,
+            nextRefreshAt: null,
+          });
+        }
         return send(res, 503, {
           status: "unavailable",
-          message: "Dashboard service credentials are not configured. Contact the site administrator.",
+          message: "Dashboard service credentials are not configured and saved assignment suggestions are unavailable.",
         });
       }
 
