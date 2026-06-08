@@ -1183,8 +1183,10 @@
         liveNextRefreshAt = null;
         render(dashboard);
         if (assignees) {
-          const rows = assignees.assignees || [];
-          $("assigneeCount").textContent = `${fmt(rows.length)} assignees`;
+          // GitHub Pages is static, so it cannot query current WISE login sessions.
+          // Show only active Cotton users from the saved WISE snapshot: users with working tasks.
+          const rows = (assignees.assignees || []).filter((a) => Number(a.working || 0) > 0);
+          $("assigneeCount").textContent = `${fmt(rows.length)} active users`;
           $("assigneeGrid").innerHTML = rows.map((a) => `
             <article class="assignee-card">
               <div class="assignee-avatar" style="background:${avatarColor(a.name)}">${esc(initials(a.name))}</div>
@@ -1193,7 +1195,7 @@
                 <strong>${formatPair(a.working, a.completed)}</strong>
               </div>
             </article>
-          `).join("") || `<div class="message">No Cotton assignees found.</div>`;
+          `).join("") || `<div class="message">No active Cotton users found in the saved WISE snapshot.</div>`;
         }
         if (suggestions) {
           liveCache_suggestions = suggestions;
